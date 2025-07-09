@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Channels;
 
 // компʼютер та його компоненти 
@@ -10,15 +11,55 @@ using System.Threading.Channels;
 // метод InstallSoftwate(Software soft) - залежність
 
 
-class Computer
-{
-    private void 
+class Computer {
+
+    // Поля під композицію
+    private Processor processor;
+    private Memory memory;
+    private Storage storage;
+
+
+    // Поля під агрегацію
+    private Keyboard keyboard;
+    private Monitor monitor;
+
+    public List<Software> Games { get; private set; } 
+    public Computer(Keyboard keyboard, Monitor monitor) {
+
+        processor = new Processor();
+        memory = new Memory();
+        storage = new Storage();
+
+        this.keyboard = keyboard;
+        this.monitor = monitor;
+
+        Games = new List<Software>();
+
+
+    }
+
+    public void Start()
+    {
+        memory.LoadData();
+        processor.ProcessData();
+        storage.SaveData();
+        monitor.Display($"Enter password: ");
+        keyboard.Typing($"1234");
+
+    }
+     public void InstallSoftwate(Software soft) {
+
+        Games.Add(soft);
+        monitor.Display($"Program insttaled: {soft.name}");
+
+    }
+
 }
 
-class Processor
-{
-    public void ProcessData()
-    {
+class Processor {
+
+    public void ProcessData() {
+
         Console.WriteLine($"Process get started...");
     }
 }
@@ -55,12 +96,27 @@ class Monitor
     }
 }
 
-class User
-{
+class User {
+
+    public string name { get; set; }
+    public void useComputer(Computer computer) {
+
+        Console.WriteLine($"{name} work in computer");
+        computer.Start();
+
+    }
+}
+
+class Software {
+
+    public string name { get; set; }
 
 }
 
-class Software
+class Program
 {
-    public string name { get; set; }
+    static void Main(string[] args)
+    {
+        
+    }
 }
