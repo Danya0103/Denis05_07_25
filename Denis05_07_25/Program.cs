@@ -113,10 +113,22 @@ class Software {
 
 }
 
-class Program
-{
-    static void Main(string[] args)
-    {
-        
+class Program {
+
+    static void Main(string[] args) {
+
+        Keyboard keyboard = new Keyboard();
+        Monitor monitor = new Monitor();
+
+        Computer myComputer = new Computer(keyboard, monitor);
+
+        User user = new User { name = "Danya" };
+
+        user.useComputer(myComputer);
+
+        Software game = new Software { name = "HSR" };
+
+        myComputer.InstallSoftwate(game);
+
     }
 }
